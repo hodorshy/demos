@@ -6,13 +6,23 @@
 
 
         <!-- test -->
-        <Test v-if="msg"></Test>
+        <!-- <Test v-if="msg"></Test> -->
+
+        <!-- swiper -->
+        <!-- <swiper></swiper> -->
+        <WcSwiper>
+            <div slot="index11">
+                <h1>xaxxxxxaslkjfas;lfjlj</h1>
+            </div>
+        </WcSwiper>
     </div>
 </template>
 
 <script>
 
 // import Test from './test.vue'
+import swiper from './vue-swipe.vue'
+import WcSwiper from './wcSwiper.vue'
 
 export default {
     name: 'HelloWorld',
@@ -32,10 +42,13 @@ export default {
 
     components: {
         // Test,
-        'Test': () => import('./test.vue'),
+        // 'Test': () => import('./test.vue'),
+        swiper,
+        WcSwiper,
     },
 
     methods: {
+
         /* 函数防抖 */
         debounce(func, wait, immediate) {
             var timeout, args, context, timestamp, result;
