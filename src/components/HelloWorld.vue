@@ -34,10 +34,7 @@ export default {
     },
 
     mounted() {
-        this.xx = this.debounce( _ => {
-                console.log( 'name' );
-        }, 3000 );
-        this.action();
+
     },
 
     components: {
@@ -83,18 +80,6 @@ export default {
             };
         },
 
-        deb( fnc, wait ) {
-
-
-        },
-
-        action() {
-            window.requestAnimationFrame( this.action.bind( this ) );
-
-            if ( typeof this.xx === 'function'  ) {
-                this.xx();
-            }
-        }
     },
 }
 </script>
