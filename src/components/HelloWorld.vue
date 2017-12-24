@@ -10,11 +10,28 @@
 
         <!-- swiper -->
         <!-- <swiper></swiper> -->
-        <WcSwiper>
+        <!-- <WcSwiper>
             <div slot="index11">
                 <h1>xaxxxxxaslkjfas;lfjlj</h1>
             </div>
-        </WcSwiper>
+        </WcSwiper> -->
+
+
+        <!-- bottomMenu -->
+        <h1 @click="test">res: {{ bottomList.switch }} {{ index1 }}</h1>
+        <ButtomMenu id="bottomMenu"
+                    :opt="bottomList"
+                    :words="words"
+                    @bottomCallback="bottomCallback">
+            <div slot="item_2">
+                <BottomItem
+                    :word="111111111111"
+                    :index="3"
+                    :curIndex.sync="bottomList.curIndex"
+                    :item="{ arrow: false, imgUrl: ['/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg'] }" >
+                </BottomItem>
+            </div>
+        </ButtomMenu>
     </div>
 </template>
 
@@ -23,14 +40,57 @@
 // import Test from './test.vue'
 import swiper from './vue-swipe.vue'
 import WcSwiper from './wcSwiper.vue'
+import ButtomMenu from './BottomList/BottomMenu.vue'
+import BottomItem from './BottomList/BottomItem.vue'
+import Vue from 'Vue'
+
+
+let Dictionary = {
+    index1: [ '开启', '关闭' ],
+    index2: [ 'A模式', 'B模式', 'C模式', 'D模式' ],
+    index3: [ '测试1', '测试2', '测试3', '测试4' ],
+    index4: [ '测试1', '测试2', '测试3', '测试4' ],
+    index5: [ '测试1', '测试2', '测试3', '测试4' ],
+}
+
+Vue.filter( 'switch', $index => Dictionary.index1[ $index ] );
 
 export default {
     name: 'HelloWorld',
     data() {
         return {
-            msg: 'Welcome to Your Vue.js App',
-            imgUrl: '../../static/images/2.jpg'
+
+            Bswitch: false,
+            index1: 1,
+            index2: 2,
+            index3: 1,
+            index4: 0,
+            index5: 3,
+
+            bottomList: {
+                data: [
+                    { arrow: false, imgUrl: [ '/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg' ], callback: index => console.log( 'bottomItemCallback:', index ) },
+                    { arrow: true, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
+                    { arrow: false, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
+                    { ungroup: true, arrow: false, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
+                 ],
+                arrowUrl: '/src/components/BottomList/images/off.jpg',
+                curIndex: -99,
+                switchIndex: 0,
+                switch: false,
+                childSwitchIndex: 3,
+                childSwitch: false,
+            },
+
         }
+    },
+
+    created() {
+        // this.bottomList.data[ 2 ].callback = ( index, item ) => {
+        //     // this.bottomList.curIndex = index;
+        //     // item.isActive = !item.isActive;
+        //     console.log( 'ungoup', item );
+        // }
     },
 
     mounted() {
@@ -42,6 +102,17 @@ export default {
         // 'Test': () => import('./test.vue'),
         swiper,
         WcSwiper,
+        ButtomMenu,
+        BottomItem,
+    },
+
+    computed: {
+        words() {
+            return [ Vue.filter( 'switch' )( +this.bottomList.switch ), this.index2, this.index3, this.index4 ];
+        },
+        switch() {
+            return this.bottomList.switch;
+        }
     },
 
     methods: {
@@ -80,12 +151,37 @@ export default {
             };
         },
 
+        test() {
+            console.log( 'click' );
+            this.index1 = +( !this.index1 );
+            this.bottomList.curIndex = 3;
+            // this.bottomList.words[ 0 ] = '123';
+        },
+
+        bottomCallback( $index ) {
+
+            switch ( $index ) {
+                case this.bottomList.switchIndex:
+                    // this.bottomList.data[ 2 ].isActive = false;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
     },
+
+    filters: {
+        'switch'( $index ) {
+            return Dictionary.index1[ $index ];
+        }
+    }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 h1,
 h2 {
     font-weight: normal;
@@ -103,5 +199,16 @@ li {
 
 a {
     color: #42b983;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#bottomMenu {
+    height: 140px;
+    width: 100%;
+    overflow: hidden;
 }
 </style>
