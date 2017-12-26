@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="item">
 
         <!-- 图标 -->
         <slot name="icon">
@@ -11,7 +11,7 @@
 
         <!-- 底部文字 -->
         <p class="word">
-            {{ word }}
+            <slot name="word" :word="word">{{ word }}</slot>
             <span :class="{ arrow: arrow }" :style="{ backgroundImage: 'url(' + arrow + ')' }"></span>
         </p>
 
@@ -73,11 +73,12 @@ export default {
     created() {
 
         // 当为 ungroup 时, 设置控制 active 的 isActive 值
-        if ( this.item.ungroup ) this.$set( this.item, 'isActive', false );
+        this.$set( this.item, 'isActive', false );
         // 默认状态为 disable
-        if ( !this.isSwitch ) this.$set( this.item, 'isDisable', false );
+        this.$set( this.item, 'isDisable', false );
         // 是否切换图片
         this.isToggleImg = Array.isArray( this.item.imgUrl );
+        this.isCustom = this.curIndex == null;
     },
 
     computed: {
@@ -89,7 +90,8 @@ export default {
         isActive() {
 
             // 是否保留童锁之前的状态
-            return /* !this.isDisable &&  */( !this.isSwitch && !this.item.ungroup && this.curIndex === this.index ) || ( this.item.isActive && this.curIndex > 0 );
+            console.log( !this.isSwitch , !this.item.ungroup , this.curIndex == this.index );
+            return /* !this.isDisable &&  */( !this.isSwitch && !this.item.ungroup && this.curIndex == this.index ) || ( this.item.isActive && ( this.curIndex > 0 || this.isCustom ) );
         },
 
         /* 控制是否为不可点击状态, 计算属性, 不能设置 */
@@ -101,21 +103,36 @@ export default {
     methods: {
         tap() {
 
-            // 切换背景图
-            if ( this.isToggleImg ) this.imgIndex = +( !this.imgIndex );
             // 开关管就返回
             if ( this.isDisable ) return;
 
             // 不是组内元素
-            if ( this.item.ungroup ) this.item.isActive = !this.item.isActive;
+            if ( this.item.ungroup && !this.isCustom ) this.item.isActive = !this.item.isActive;
+
+            // 更新 changeCurIndex
+            if ( !this.item.ungroup && !this.isCustom ) this.$emit( 'update:curIndex', this.index );
             // 单独触发 callback
             typeof this.item.callback === 'function' && this.item.callback( this.index, this.item );
-            // 更新 changeCurIndex
-            if ( !this.item.ungroup ) this.$emit( 'update:curIndex', this.index );
+        },
+    },
+
+    watch: {
+        isActive() {
+            typeof this.item.activeCallback === 'function' && this.item.activeCallback( this.index, this.item );
             // 童锁
             if ( this.isChildSwitch )  this.$emit( 'childMode', this.isActive );
         },
+        word() {
+            // 切换背景图
+            if ( this.isToggleImg ) this.imgIndex = +( !this.imgIndex );
+        },
     },
+
+    mounted() {
+        // 添加自身
+        this.item.ref = this.$refs.item;
+
+    }
 
 }
 </script>

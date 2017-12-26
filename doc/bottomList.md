@@ -1,4 +1,21 @@
 ```js
+
+
+根据 word 的变化来响应数据, img 的变化都要根据 word 来变化 +
+考虑到动画, 所以 active 不需要绑定, 自定修改就好 +
+curIndex 与 active 的绑定的思考, 监听 active +
+  提供一个 active 的触发事件 +
+curIndex 与 isSwitch 和 childMode 不绑定
+模拟上报打印
+不传入 curIndex  就是取消默认控制 +
+传入 curIndex 和 index 受默认行为控制 +
+props-slot
+1. 自定义童锁
+2. zjf 案例, 需要图片
+3. simple
+4. 灯关案例
+
+
 [
   	// 根据 data[] 来计算
   { group: false, switch: this.switch, word: this.word, isChild: false }

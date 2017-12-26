@@ -6,7 +6,7 @@
             <div :ref=" 'item_' + $index " v-for=" ( item, $index ) in data " :key="$index"
                 :class="[ 'item', 'item_' + $index ]"
                 @click=" tap( $index ) ">
-                <slot :name=" 'item_' + $index " :isSwitch=" opt.switchIndex === $index ">
+                <slot :name=" 'item_' + $index " :item="item" :index="$index + 1">
                     <BottomItem
                         :class="[ { switch: opt.switchIndex === $index }, { child: opt.childSwitch === $index }, { ungroup: item.ungroup } ]"
                         :word="words[ $index ]"
@@ -163,7 +163,7 @@ export default {
 
         /* 童锁控制 disable 状态 */
         childMode( isActive ) {
-            this.opt.data.forEach( ( el, index ) => index !== this.opt.switchIndex && index !== this.opt.childSwitchIndex && ( el.isDisable = isActive ) );
+            this.opt.data.forEach( ( el, index ) => index !== this.opt.switchIndex /* && index !== this.opt.childSwitchIndex */ && ( el.isDisable = isActive ) );
         },
     },
 }

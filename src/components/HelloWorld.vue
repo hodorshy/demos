@@ -23,12 +23,14 @@
                     :opt="bottomList"
                     :words="words"
                     @bottomCallback="bottomCallback">
-            <div slot="item_2">
+            <div slot="item_2" slot-scope="props">
                 <BottomItem
-                    :word="111111111111"
-                    :index="3"
-                    :curIndex.sync="bottomList.curIndex"
-                    :item="{ arrow: false, imgUrl: ['/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg'] }" >
+                    :item="props.item"
+
+                    :index="props.index"
+                    :curIndex.sync="bottomList.curIndex">
+
+                    <span slot="word">{{ index5 }}</span>
                 </BottomItem>
             </div>
         </ButtomMenu>
@@ -65,13 +67,29 @@ export default {
             index2: 2,
             index3: 1,
             index4: 0,
-            index5: 3,
+            index5: 'eee',
+
+            itemCustom: {
+                arrow: false,
+                imgUrl: ['/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg'],
+                activeCallback: (index, item) => { console.log( 1 ) },
+                ungroup: true,
+            },
 
             bottomList: {
                 data: [
                     { arrow: false, imgUrl: [ '/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg' ], callback: index => console.log( 'bottomItemCallback:', index ) },
                     { arrow: true, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
-                    { arrow: false, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
+                    // { arrow: false, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
+                    {
+                        arrow: true,
+                        imgUrl: ['/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg'],
+                        activeCallback: (index, item) => { console.log( 1 ) },
+                        callback: ( index, item ) => {
+                            // item.isActive = !item.isActive;
+                            console.log('item', item);
+                        }
+                    },
                     { ungroup: true, arrow: false, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
                  ],
                 arrowUrl: '/src/components/BottomList/images/off.jpg',
