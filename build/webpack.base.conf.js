@@ -11,7 +11,10 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    app: './src/main.js',
+    test: [ 'test' ],
+    vendor: [ 'jquery', 'vue-swipe' ]
+    // aaa: './aaa/test.js'
   },
   output: {
     path: config.build.assetsRoot,
@@ -25,7 +28,10 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-    }
+    },
+    modules: [
+      path.resolve(__dirname, "../public"), "node_modules"
+    ]
   },
   module: {
     rules: [

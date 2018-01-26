@@ -40,11 +40,13 @@
 <script>
 
 // import Test from './test.vue'
-import swiper from './vue-swipe.vue'
+// import swiper from './vue-swipe.vue'
 import WcSwiper from './wcSwiper.vue'
 import ButtomMenu from './BottomList/BottomMenu.vue'
 import BottomItem from './BottomList/BottomItem.vue'
 import Vue from 'Vue'
+import test from 'test'
+import jquery from 'jquery'
 
 
 let Dictionary = {
@@ -71,28 +73,28 @@ export default {
 
             itemCustom: {
                 arrow: false,
-                imgUrl: ['/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg'],
+                imgUrl: ['./src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg'],
                 activeCallback: (index, item) => { console.log( 1 ) },
                 ungroup: true,
             },
 
             bottomList: {
                 data: [
-                    { arrow: false, imgUrl: [ '/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg' ], callback: index => console.log( 'bottomItemCallback:', index ) },
-                    { arrow: true, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
+                    { arrow: false, imgUrl: [ './src/components/BottomList/images/on.jpg', './src/components/BottomList/images/off.jpg' ], callback: index => console.log( 'bottomItemCallback:', index ) },
+                    { arrow: true, imgUrl: './src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
                     // { arrow: false, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
                     {
                         arrow: true,
-                        imgUrl: ['/src/components/BottomList/images/on.jpg', '/src/components/BottomList/images/off.jpg'],
+                        imgUrl: ['./src/components/BottomList/images/on.jpg', './src/components/BottomList/images/off.jpg'],
                         activeCallback: (index, item) => { console.log( 1 ) },
                         callback: ( index, item ) => {
                             // item.isActive = !item.isActive;
                             console.log('item', item);
                         }
                     },
-                    { ungroup: true, arrow: false, imgUrl: '/src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
+                    { ungroup: true, arrow: false, imgUrl: './src/components/BottomList/images/on.jpg', callback: index => console.log( 'bottomItemCallback:', index ) },
                  ],
-                arrowUrl: '/src/components/BottomList/images/off.jpg',
+                arrowUrl: './src/components/BottomList/images/off.jpg',
                 curIndex: -99,
                 switchIndex: 0,
                 switch: false,
@@ -118,7 +120,7 @@ export default {
     components: {
         // Test,
         // 'Test': () => import('./test.vue'),
-        swiper,
+        // swiper,
         WcSwiper,
         ButtomMenu,
         BottomItem,
